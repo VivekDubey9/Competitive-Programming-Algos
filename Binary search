@@ -1,22 +1,22 @@
 #include <iostream>
 
 using namespace std;
-int binary(int arr[],int p,int q,int x){
-    int mid;
-    mid=(p+q)/2;
-    if(p<=q){
-    if(arr[mid]==x){
-    return mid;
-}
-    else if(arr[mid]>x){ 
-    binary(arr,mid+1,q,x);
-    }
-    else{
-    binary(arr,p,mid-1,x);
-    }
+int binary(int arr[],int p,int q,int x){                //passing arr[], upper limit p, lower limit q, x value to be search
+    int mid;                                            //declaring mid
+    mid=(p+q)/2;                                        //initializing mid (upper_limit+lower_limit)/2
+    if(p<=q){                                           
+        if(arr[mid]==x){                                    //if x is found at mid position
+            return mid;
+        }
+        else if(arr[mid]>x){                                //if x is less than the mid
+            binary(arr,mid+1,q,x);                          //recursive search for mid+1 to q
+        }
+        else{                                               //if x is greater than the mid
+            binary(arr,p,mid-1,x);                          //recursive search for p to mid-1
+        }
     }
     
-        return -1;
+        return -1;                                         //if value not found
 }
 
 int main()
