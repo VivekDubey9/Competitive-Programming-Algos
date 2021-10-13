@@ -1,0 +1,215 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAXSIZE 10
+#define EMPTY 0
+#define OCCUPIED 1
+struct NodeO {
+
+    int data;
+    struct NodeO *next;
+}*tableO[MAXSIZE];
+
+struct NodeC {
+
+    int data;
+    int status;
+}tableC[MAXSIZE];
+
+
+void displayClosed(){
+
+    printf("\n Table Content :\n\n Position\tData\n---------------------\n");
+    for(int i=0;i<MAXSIZE;i++){
+        if(tableC[i].status==OCCUPIED)
+            printf(" %d\t|\t%d\n",i,tableC[i].data);
+    }
+}
+
+int hash(int key){
+    return key%MAXSIZE;
+}
+
+
+void insertClosed(int data){
+
+    int h=hash(data),location=h,key=data;
+    for(int i=1;i<MAXSIZE;i++){
+
+        if(tableC[location].status==EMPTY) {
+            tableC[location].data=data;
+            tableC[location].status=OCCUPIED;
+            printf("\n Data %d has been inserted.\n",data);
+            return;
+        }
+        if(tableC[location].data==key) {
+
+            printf("\n Duplicate data!\n\n");
+            return;
+        }
+        location=(h+i)%MAXSIZE; //double hasing may be
+    }
+    printf("\n Hash Table Overflow!");
+}
+
+int searchClosed(int data) {
+
+    int h=hash(data),location=h;
+
+    for(int i=0;i<MAXSIZE;i++) {
+
+        if(tableC[location].status==EMPTY)// 1st index is means no element in index OCCUPIED.
+            return -1; //if only 1st index OCCUPIED then only move to next location. so here no element so go back/return
+
+        if(tableC[location].data==data)
+            return location;
+
+        location= (h+i)%MAXSIZE;
+
+    }
+    return -1;
+
+}
+
+int searchOpen(int data) {
+
+    int h=hash(data);
+    struct NodeO *ptr=tableO[h];
+    while(ptr) {
+
+        if(ptr->data==data)
+            return h;
+        ptr=ptr->next;
+    }
+    return -1;
+}
+
+void insertOpen(int data) {
+
+    struct NodeO *temp;
+
+    if(searchOpen(data)!=-1) {
+
+        printf("\n Duplicate data!\n\n");
+        return;
+    }
+
+    int h=hash(data);
+    temp=(struct NodeO*)malloc(sizeof(struct NodeO));
+    temp->data=data;
+    temp->next=NULL;
+    struct NodeO *ptr=tableO[h];
+
+   if(ptr==NULL){
+        tableO[h]=temp;
+        return;
+  }
+    while(ptr->next) {
+        ptr=ptr->next;
+    }
+    ptr->next=temp;
+
+
+}
+
+void displayOpen() {
+
+    printf("\nHash Table :\n\nPosition\tData\n---------------------\n");
+
+    for(int i=0;i<MAXSIZE;i++) {
+
+        if(tableO[i]){
+            struct NodeO *ptr=tableO[i];
+            printf(" %d\t|\t",i);
+            while(ptr) {
+
+                printf("%d ",ptr->data);
+                ptr=ptr->next;
+            }
+            printf("\n");
+        }
+    }
+
+}
+
+
+
+int main()
+{
+    int choice,data;
+    printf("\n 1.Open Hashing\n 2.Closed Hashing\n 3.Exit\n Enter your choice : ");
+    scanf("%d",&choice);
+    printf("h(k)= k mod 10\n");
+    switch(choice){
+
+        case 1:
+                //chaining (open)
+                do {
+                    printf("\n 1.Insert data.\n 2.Search data.\n 3.Display data.\n 4.Exit.\n Enter your choice : ");
+                    scanf("%d",&choice);
+                    switch(choice){
+
+                        case 1 : printf(" Enter data to be inserted : ");
+                                 scanf("%d",&data);
+                                 insertOpen(data);
+                                 break;
+
+                        case 2 : printf(" Enter data to be searched : ");
+                                 scanf("%d",&data);
+                                 int position=searchOpen(data);
+                                 if(position==-1)
+                                    printf("\n %d not found in Hash Table.\n",data);
+                                 else
+                                    printf("\n %d found at position %d in Hash Table.\n",data,position);
+                                 break;
+
+                        case 3 :
+                                 displayOpen();
+                                 break;
+
+                        case 4 :exit(0);
+
+                        default:printf("\n Invalid choice.\n");
+                    }
+
+                }while(choice!=4);
+
+    case 2:     //linear probing (closed)
+
+                for(int i=0;i<MAXSIZE;i++){
+                    tableC[i].status=EMPTY;
+                }
+
+                do {
+                    printf("\n\n 1.Insert data.\n 2.Search data.\n 3.Display data.\n 4.Exit.\n Enter your choice : ");
+                    scanf("%d",&choice);
+                    switch(choice){
+
+                        case 1 : printf(" Enter data to be inserted : ");
+                                 scanf("%d",&data);
+                                 insertClosed(data);
+                                 break;
+
+                        case 2 : printf(" Enter data to be searched : ");
+                                 scanf("%d",&data);
+                                 int position=searchClosed(data);
+                                 if(position==-1)
+                                    printf("\n %d not found in Hash Table.\n",data);
+                                 else
+                                    printf("\n %d found at position %d in Hash Table.\n",data,position);
+                                 break;
+
+                        case 3 :
+                                 displayClosed();
+                                 break;
+
+                        case 4 : exit(0);
+
+                        default: printf("\n Invalid choice.\n");
+                    }
+
+                }while(choice!=4);
+    case 3  : exit(0);
+    default : printf("\n Invalid Choice.\n\n");
+    }
+    return 0;
+}
