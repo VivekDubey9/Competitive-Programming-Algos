@@ -1,0 +1,57 @@
+import random
+y=0
+yy=0
+a=0
+j=0
+l=0
+print('                   ""WELCOME TO THE RUNNER""                    ')
+print('                       BY-VARCHASWA RASTOGI                  ')
+print('                   Instructions for this game:-                 ')
+print("THIS IS A TWO PLAYER GAME.")
+print("EACH PLAYER WILL GET 10 CHANCES.")
+print('IN EACH CHANCE A DIE WILL BE ROLLED ONCE.')
+print('THE PLAYER WILL GO AS MANY STEPS AS THE NUNBER COMES ON THE DIE.')
+print("LETS BENIGS THE GAME!!!!!")
+k=input('enter 1st player name')
+k0=input('enter 2nd player name')
+print('PRESS ENTER TO ROLL THE DICE')
+input() 
+for a in range(0,11):
+ a=random.randint(1,6)
+ 
+ print(k,'roll the dice:',a)
+ j=j+a
+ b=random.randint(1,6)
+ print(k0,'roll the dice:',b)
+ l=l+b
+ x=input()
+ if a==1:
+  a=1
+ elif a==2:
+  a=2
+ elif a==3:
+  a=3
+ elif a==4:
+  a=4
+ elif a==5:
+  a=5
+ else:
+  a=6
+print('total steps covered by',k,'=',j)
+print('tatal steps covered by',k0,'=',l)
+while(y<j):
+ print('-',end='')
+ y+=1
+print()
+while(yy<l):
+ print('+',end='')
+ yy+=1
+print()
+
+if j>l:
+ print(k,'is the winner!!!')
+elif j<l:
+ print(k0,'is the winner!!!')
+else:
+ print('game draw')
+ print('play again')
