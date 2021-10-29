@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int SumSubArray(vector <int> arr){
+    int cs=0,largest=0;
+    int n=arr.size();
+    for(int i=0;i<n;i++){
+        cs+=arr[i];
+        if(cs<0)
+        cs=0;
+        largest=max(largest,cs);
+    }
+    return largest;
+}
+
+int32_t main()
+{
+    //  int arr[]={1,-2,3,4,4,-2};
+     vector<int> arr{ 1,-2,3,4,4,-2 };
+    int n=sizeof(arr)/sizeof(int);
+    int max1=SumSubArray(arr);
+    cout<<max1;
+return 0;
+}
