@@ -1,0 +1,9 @@
+string = "geeks for geeks geeks geeks geeks"
+ 
+# Prints the string by replacing
+# e by a
+print(string.replace("e", "a"))
+ 
+# Prints the string by replacing only
+# 3 occurrence of ek by a
+print(string.replace("ek", "a", 3))
